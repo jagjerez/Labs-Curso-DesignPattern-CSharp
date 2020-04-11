@@ -19,18 +19,29 @@ namespace Problem
             animals.Add(new Animal { Name = "Vaca", Class = AnimalClass.Mamiferos, Order = AnimalOrder.Herbivoro });
             animals.Add(new Animal { Name = "Oveja", Class = AnimalClass.Mamiferos, Order = AnimalOrder.Herbivoro });
 
+            Console.WriteLine("Todos:");
             foreach (var animal in animals)
             {
                 Console.WriteLine($"Nombre: {animal.Name}, Clase: {animal.Class}, Order: {animal.Order}");
             }
 
             Console.WriteLine("Aves:");
-            foreach (var animal in new AnimalFilter().FilterByClass(animals, AnimalClass.Aves))
+            foreach (var animal in new AnimalFilter().FilterAnimal<Animal>((o)=> o.Class == AnimalClass.Aves, animals))
+            {
+                Console.WriteLine($"Nombre: {animal.Name}, Clase: {animal.Class}, Ordern: {animal.Order}");
+            }
+            Console.WriteLine("Herbivoros:");
+            foreach (var animal in new AnimalFilter().FilterAnimal<Animal>((o) => o.Order == AnimalOrder.Herbivoro, animals))
             {
                 Console.WriteLine($"Nombre: {animal.Name}, Clase: {animal.Class}, Ordern: {animal.Order}");
             }
 
-         
+            Console.WriteLine("Clase And order:");
+            foreach (var animal in new AnimalFilter().FilterAnimal<Animal>((o) => o.Order == AnimalOrder.Herbivoro && o.Class == AnimalClass.Mamiferos, animals))
+            {
+                Console.WriteLine($"Nombre: {animal.Name}, Clase: {animal.Class}, Ordern: {animal.Order}");
+            }
+
             Console.ReadLine();
 
 
