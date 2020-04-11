@@ -14,8 +14,7 @@ namespace Problem
             report.AddEntry(new CourseReportEntry { Name = "Flutter", Students = 1900, Rating = 4.5 });
 
             Console.WriteLine(report.ToString());
-
-            report.SaveToFile(@"Reports", "WorkReport.txt");
+            ReportPrint.SaveToFile(@"Reports", "WorkReport.txt", report.ToString());
         }
     }
 
@@ -39,16 +38,22 @@ namespace Problem
 
         public void RemoveEntryAt(int index) => _entries.RemoveAt(index);
 
-        public void SaveToFile(string directoryPath, string fileName)
+        public override string ToString() =>
+            string.Join(Environment.NewLine, _entries.Select(x => $"Curso: {x.Name}, Estudiantes: {x.Students}, Valoración: {x.Rating}"));
+    }
+
+    public static class ReportPrint
+    {
+        public static void SaveToFile(string directoryPath, string fileName,string texto)
         {
             if (!Directory.Exists(directoryPath))
             {
                 Directory.CreateDirectory(directoryPath);
             }
 
-            File.WriteAllText(Path.Combine(directoryPath, fileName), ToString());
+            File.WriteAllText(Path.Combine(directoryPath, fileName), texto);
         }
-        public override string ToString() =>
-            string.Join(Environment.NewLine, _entries.Select(x => $"Curso: {x.Name}, Estudiantes: {x.Students}, Valoración: {x.Rating}"));
     }
+
+
 }
